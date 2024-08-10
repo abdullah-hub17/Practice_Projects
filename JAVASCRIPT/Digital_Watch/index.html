@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Watch</title>
+  </head>
+  <body>
+    <!-- CSS Styling => -->
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f0f0f0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .clockHolder {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 4px 10px rgb(3, 49, 217);
+        width: 250px;
+      }
+
+      .timeHolder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #ffe2e2;
+        border-radius: 30px;
+        border: 2px solid transparent;
+        box-shadow: 0 0 15px rgb(255, 60, 60);
+      }
+
+      .timeOptions {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+      }
+
+      .mainDiv {
+        text-align: center;
+      }
+
+      #clock {
+        font-size: 48px;
+        color: #333;
+        letter-spacing: 2px;
+      }
+    </style>
+
+    <!-- Html => -->
+    <div class="container">
+      <div class="clockHolder">
+        <div class="timeHolder">
+          <div class="timeOptions">
+            <i class="fas fa-clock" data-title="Time"></i>
+            <i class="fas fa-stopwatch" data-title="StopWatch"></i>
+            <i class="far fa-clock" data-title="CountDown"></i>
+          </div>
+          <div class="mainDiv">
+            <p id="clock"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript => -->
+    <script>
+      const currentTime = () => {
+        let currTime = new Date().toLocaleTimeString();
+        document.getElementById("clock").innerText = currTime;
+      };
+
+      currentTime();
+
+      setInterval(() => {
+        currentTime();
+      }, 1000);
+    </script>
+  </body>
+</html>
