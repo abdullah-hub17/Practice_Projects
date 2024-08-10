@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Watch and Timer</title>
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f0f0f0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .clockHolder {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 4px 10px rgb(3, 49, 217);
+        width: 250px;
+      }
+
+      .timeHolder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #ffe2e2;
+        border-radius: 30px;
+        border: 2px solid transparent;
+        box-shadow: 0 0 15px rgb(255, 60, 60);
+      }
+
+      .timeOptions {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .timeOptions button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+      }
+
+      .mainDiv {
+        text-align: center;
+      }
+
+      #clock {
+        font-size: 48px;
+        color: #333;
+        letter-spacing: 2px;
+      }
+
+      #timer,
+      .buttons {
+        display: none;
+        font-size: 48px;
+        color: #333;
+      }
+
+      .buttons button {
+        margin: 5px;
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        border: 1px solid #333;
+        background-color: #fff;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="clockHolder">
+        <div class="timeHolder">
+          <div class="timeOptions">
+            <button id="watchBtn">Watch</button>
+            <button id="timerBtn">Timer</button>
+          </div>
+          <div class="mainDiv">
+            <p id="clock"></p>
+            <p id="timer">0</p>
+            <div class="buttons">
+              <button class="startBtn">Start</button>
+              <button class="resetBtn">Reset</button>
+              <button class="stopBtn">Stop</button>
+              <button class="clearBtn">Clear</button>
+            </div>
+            <div id="resetValue"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const clockElement = document.getElementById("clock");
+      const timerElement = document.getElementById("timer");
+      const buttonsElement = document.querySelector(".buttons");
+
+      const watchBtn = document.getElementById("watchBtn");
+      const timerBtn = document.getElementById("timerBtn");
+
+      let startCount = 0;
+      let intervalID = null;
+
+      const startTimer = () => {
+        if (!intervalID) {
+          intervalID = setInterval(() => {
+            timerElement.innerText = startCount++;
+          }, 1000);
+        }
+      };
+
+      const stopTimer = () => {
+        if (intervalID) {
+          clearInterval(intervalID);
+          intervalID = null;
+          showStopValue();
+        }
+      };
+
+      const resetTimer = () => {
+        startCount = 0;
+        timerElement.innerText = startCount;
+        clearInterval(intervalID);
+        intervalID = null;
+      };
+
+      const showStopValue = () => {
+        const resetValueElement = document.getElementById("resetValue");
+        const newPara = document.createElement("p");
+        newPara.innerText = `The stop time is ${startCount - 1}`;
+        resetValueElement.append(newPara);
+      };
+
+      const clearTimeValue = () => {
+        const resetValueElement = document.getElementById("resetValue");
+        resetValueElement.innerHTML = "";
+      };
+
+      const currentTime = () => {
+        let currTime = new Date().toLocaleTimeString();
+        clockElement.innerText = currTime;
+      };
+
+      currentTime();
+      setInterval(currentTime, 1000);
+
+      watchBtn.addEventListener("click", () => {
+        clockElement.style.display = "block";
+        timerElement.style.display = "none";
+        buttonsElement.style.display = "none";
+      });
+
+      timerBtn.addEventListener("click", () => {
+        clockElement.style.display = "none";
+        timerElement.style.display = "block";
+        buttonsElement.style.display = "block";
+      });
+
+      document.querySelector(".startBtn").addEventListener("click", startTimer);
+      document.querySelector(".resetBtn").addEventListener("click", resetTimer);
+      document.querySelector(".stopBtn").addEventListener("click", stopTimer);
+      document
+        .querySelector(".clearBtn")
+        .addEventListener("click", clearTimeValue);
+    </script>
+  </body>
+</html>
